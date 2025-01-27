@@ -21,7 +21,7 @@ class BigText extends StatelessWidget {
       maxLines: 1,
       overflow: textOverflow,
       style: TextStyle(
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         fontSize: size,
         color: color,
       ),
