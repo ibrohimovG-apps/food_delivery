@@ -20,7 +20,7 @@ class SmallText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: size == 0 ? Dimensions.height10 * 1.35 : size,
+        fontSize: size == 0 ? Dimensions.height10 * 1.2 : size,
         color: color,
         height: height,
       ),
