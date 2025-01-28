@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/widgets/big_text.dart';
@@ -37,15 +38,30 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 320,
-      child: PageView.builder(
-        controller: pageController,
-        itemCount: 5,
-        itemBuilder: (context, position) {
-          return _buildPageItem(position);
-        },
-      ),
+    return Column(
+      children: [
+        Container(
+          height: 320,
+          child: PageView.builder(
+            controller: pageController,
+            itemCount: 5,
+            itemBuilder: (context, position) {
+              return _buildPageItem(position);
+            },
+          ),
+        ),
+        DotsIndicator(
+          dotsCount: 5,
+          position: _currentPageValue.round(),
+          decorator: DotsDecorator(
+            activeColor: AppColors.mainColor,
+            size: const Size.square(9.0),
+            activeSize: const Size(18.0, 9.0),
+            activeShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
+          ),
+        ),
+      ],
     );
   }
 
@@ -150,6 +166,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                       height: 20,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconAndTextWidget(
                           icon: Icons.circle_sharp,
