@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/utils/dimensions.dart';
 
 // ignore: must_be_immutable
 class SmallText extends StatelessWidget {
@@ -10,7 +11,7 @@ class SmallText extends StatelessWidget {
     super.key,
     this.color = const Color(0xFFccc7c5),
     required this.text,
-    this.size = 12,
+    this.size = 0,
     this.height = 1.2,
   });
 
@@ -19,7 +20,7 @@ class SmallText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: size,
+        fontSize: size == 0 ? Dimensions.height10 * 1.35 : size,
         color: color,
         height: height,
       ),

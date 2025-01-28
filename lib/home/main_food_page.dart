@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/home/food_page_body.dart';
 import 'package:food_delivery/utils/colors.dart';
+import 'package:food_delivery/utils/dimensions.dart';
 import 'package:food_delivery/widgets/big_text.dart';
 import 'package:food_delivery/widgets/small_text.dart';
 
@@ -20,12 +21,12 @@ class _MainFoodPageState extends State<MainFoodPage> {
           Container(
             child: Container(
               margin: EdgeInsets.only(
-                top: 80,
-                bottom: 15,
+                top: Dimensions.height10 * 6,
+                bottom: Dimensions.height10 * 1.5,
               ),
               padding: EdgeInsets.only(
-                left: 20,
-                right: 20,
+                left: Dimensions.height10 * 2,
+                right: Dimensions.height10 * 2,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,22 +43,27 @@ class _MainFoodPageState extends State<MainFoodPage> {
                             text: "Narsingdi",
                             color: Colors.black54,
                           ),
-                          Icon(Icons.arrow_drop_down_rounded),
+                          Icon(
+                            Icons.arrow_drop_down_rounded,
+                            size: Dimensions.height10 * 2.5,
+                          ),
                         ],
                       ),
                     ],
                   ),
                   Center(
                     child: Container(
-                      width: 45,
-                      height: 45,
+                      width: Dimensions.height10 * 4.5,
+                      height: Dimensions.height10 * 4.5,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.height10 * 1.5),
                         color: AppColors.mainColor,
                       ),
                       child: Icon(
                         Icons.search,
                         color: Colors.white,
+                        size: Dimensions.height10 * 2.5,
                       ),
                     ),
                   )
