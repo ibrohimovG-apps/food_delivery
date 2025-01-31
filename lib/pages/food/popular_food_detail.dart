@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/controllers/popular_product_controller.dart';
+import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
 import 'package:food_delivery/widgets/app_column.dart';
 import 'package:food_delivery/widgets/app_icon.dart';
 import 'package:food_delivery/widgets/big_text.dart';
 import 'package:food_delivery/widgets/expandable_text_widget.dart';
+import 'package:get/get.dart';
 
 class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({super.key});
+  final int pageId;
+  const PopularFoodDetail({super.key, required this.pageId});
 
   @override
   Widget build(BuildContext context) {
+    var product =
+        Get.find<PopularProductController>().popularProductList[pageId];
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: Container(
@@ -62,7 +69,7 @@ class PopularFoodDetail extends StatelessWidget {
                 color: AppColors.mainColor,
               ),
               child: BigText(
-                text: "\$10 | Add to cart",
+                text: "\$${product.price!} | Add to cart",
                 color: Colors.white,
               ),
             )
@@ -79,7 +86,9 @@ class PopularFoodDetail extends StatelessWidget {
               height: 35 * Dimensions.height10,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/image/food0.png"),
+                  image: NetworkImage(AppConstants.BASE_URL +
+                      AppConstants.UPLOADS +
+                      product.img!),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -118,7 +127,7 @@ class PopularFoodDetail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppColumn(text: "Biriani"),
+                  AppColumn(text: product.name!),
                   SizedBox(
                     height: Dimensions.height10 * 2,
                   ),
@@ -129,8 +138,8 @@ class PopularFoodDetail extends StatelessWidget {
                   Expanded(
                     child: SingleChildScrollView(
                       child: ExpandableTextWidget(
-                          text:
-                              "Biriani is a mixed rice dish with its origins among the Muslims of the Indian subcontinent. It is made with Indian spices, rice, and usually some type of meat (chicken, beef, goat, pork, lamb, prawn, or fish), and sometimes, in addition, eggs and/or potatoes in certain regional varieties. It is made with Indian spices, rice, and usually some type of meat (chicken, beef, goat, pork, lamb, prawn, or fish), and sometimes, in addition, eggs and/or potatoes in certain regional varieties. Biriani is a mixed rice dish with its origins among the Muslims of the Indian subcontinent. It is made with Indian spices, rice, and usually some type of meat (chicken, beef, goat, pork, lamb, prawn, or fish), and sometimes, in addition, eggs and/or potatoes in certain regional varieties. It is made with Indian spices, rice, and usually some type of meat (chicken, beef, goat, pork, lamb, prawn, or fish), and sometimes, in addition, eggs and/or potatoes in certain regional varieties."),
+                        text: product.description!,
+                      ),
                     ),
                   ),
                   SizedBox(
