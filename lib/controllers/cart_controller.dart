@@ -12,7 +12,7 @@ class CartController extends GetxController {
   Map<int, CartModel> get items => _items;
 
   void addItem(ProductModel product, int quantity) {
-    var totalQuantity = 0; 
+    var totalQuantity = 0;
     if (_items.containsKey(product.id!)) {
       _items.update(
         product.id!,
@@ -31,7 +31,7 @@ class CartController extends GetxController {
       );
       if (totalQuantity <= 0) {
         _items.remove(product.id);
-      } 
+      }
     } else {
       if (quantity > 0) {
         _items.putIfAbsent(

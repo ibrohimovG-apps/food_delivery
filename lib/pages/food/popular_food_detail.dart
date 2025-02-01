@@ -135,36 +135,43 @@ class PopularFoodDetail extends StatelessWidget {
                   child: AppIcon(
                     icon: Icons.arrow_back_ios,
                     isLeft: true,
+                    size: Dimensions.height10 * 4,
                   ),
                 ),
                 GetBuilder<PopularProductController>(
                   builder: (popularProduct) {
                     return Stack(
                       children: [
-                        AppIcon(icon: Icons.shopping_cart_outlined),
+                        AppIcon(
+                          icon: Icons.shopping_cart_outlined,
+                          size: Dimensions.height10 * 4,
+                        ),
                         Get.find<PopularProductController>().totalItems >= 1
                             ? Positioned(
-                                right: 0,
-                                top: 0,
-                                child: AppIcon(
-                                  icon: Icons.circle,
-                                  size: Dimensions.height10 * 2,
-                                  iconColor: Colors.transparent,
-                                  backgroundColor: AppColors.mainColor,
-                                ),
-                              )
-                            : Container(),
-                        Get.find<PopularProductController>().totalItems >= 1
-                            ? Positioned(
-                                right: Dimensions.height10 * 0.6,
-                                top: Dimensions.height10 * 0.3,
-                                child: SmallText(
+                                right: Dimensions.height10 * 0.5,
+                                top: Dimensions.height10 * 0.5,
+                                child: Container(
+                                  padding:
+                                      EdgeInsets.all(Dimensions.height10 * 0.3),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppColors.mainColor,
+                                  ),
+                                  alignment: Alignment.center,
+                                  constraints: BoxConstraints(
+                                    minWidth: Dimensions.height10 * 1.5,
+                                    minHeight: Dimensions.height10 * 1.5,
+                                  ),
+                                  child: SmallText(
                                     text: Get.find<PopularProductController>()
                                         .totalItems
                                         .toString(),
-                                    color: Colors.white),
+                                    color: Colors.white,
+                                    size: Dimensions.height10 * 0.8,
+                                  ),
+                                ),
                               )
-                            : Container(),
+                            : const SizedBox.shrink(),
                       ],
                     );
                   },
