@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/controllers/cart_controller.dart';
 import 'package:food_delivery/controllers/popular_product_controller.dart';
-import 'package:food_delivery/pages/home/main_food_page.dart';
+import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
@@ -14,7 +14,9 @@ import 'package:get/get.dart';
 
 class PopularFoodDetail extends StatelessWidget {
   final int pageId;
-  const PopularFoodDetail({super.key, required this.pageId});
+  final String page;
+  const PopularFoodDetail(
+      {super.key, required this.pageId, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -130,26 +132,37 @@ class PopularFoodDetail extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => MainFoodPage());
+                    if (page == "cartpage") {
+                      Get.toNamed(RouteHelper.getCartPage());
+                    } else {
+                      Get.toNamed(RouteHelper.getInitial());
+                    }
                   },
                   child: AppIcon(
                     icon: Icons.arrow_back_ios,
                     isLeft: true,
-                    size: Dimensions.height10 * 4,
+                    size: Dimensions.height10 * 5,
                   ),
                 ),
                 GetBuilder<PopularProductController>(
                   builder: (popularProduct) {
                     return Stack(
                       children: [
-                        AppIcon(
-                          icon: Icons.shopping_cart_outlined,
-                          size: Dimensions.height10 * 4,
+                        GestureDetector(
+                          onTap: () {
+                            if (popularProduct.totalItems >= 1) {
+                              Get.toNamed(RouteHelper.getCartPage());
+                            }
+                          },
+                          child: AppIcon(
+                            icon: Icons.shopping_cart_outlined,
+                            size: Dimensions.height10 * 5,
+                          ),
                         ),
                         Get.find<PopularProductController>().totalItems >= 1
                             ? Positioned(
-                                right: Dimensions.height10 * 0.5,
-                                top: Dimensions.height10 * 0.5,
+                                right: Dimensions.height10 * 0.8,
+                                top: Dimensions.height10 * 0.8,
                                 child: Container(
                                   padding:
                                       EdgeInsets.all(Dimensions.height10 * 0.3),

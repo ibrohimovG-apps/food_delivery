@@ -14,7 +14,9 @@ import 'package:get/get.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
   final int pageId;
-  const RecommendedFoodDetail({super.key, required this.pageId});
+  final String page;
+  const RecommendedFoodDetail(
+      {super.key, required this.pageId, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +37,15 @@ class RecommendedFoodDetail extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(RouteHelper.getHome());
+                    if (page == "cartpage") {
+                      Get.toNamed(RouteHelper.getCartPage());
+                    } else {
+                      Get.toNamed(RouteHelper.getInitial());
+                    }
                   },
                   child: AppIcon(
                     icon: Icons.clear,
+                    size: Dimensions.height10 * 5,
                   ),
                 ),
                 // AppIcon(icon: Icons.shopping_cart_outlined),
@@ -46,14 +53,21 @@ class RecommendedFoodDetail extends StatelessWidget {
                   builder: (popularProduct) {
                     return Stack(
                       children: [
-                        AppIcon(
-                          icon: Icons.shopping_cart_outlined,
-                          size: Dimensions.height10 * 4,
+                        GestureDetector(
+                          onTap: () {
+                            if (popularProduct.totalItems >= 1) {
+                              Get.toNamed(RouteHelper.getCartPage());
+                            }
+                          },
+                          child: AppIcon(
+                            icon: Icons.shopping_cart_outlined,
+                            size: Dimensions.height10 * 5,
+                          ),
                         ),
                         Get.find<PopularProductController>().totalItems >= 1
                             ? Positioned(
-                                right: Dimensions.height10 * 0.5,
-                                top: Dimensions.height10 * 0.5,
+                                right: Dimensions.height10 * 0.8,
+                                top: Dimensions.height10 * 0.8,
                                 child: Container(
                                   padding:
                                       EdgeInsets.all(Dimensions.height10 * 0.3),
@@ -136,7 +150,7 @@ class RecommendedFoodDetail extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: Dimensions.height10 * 6,
+                  horizontal: Dimensions.height10 * 8,
                   vertical: Dimensions.height10 * 2,
                 ),
                 child: Row(
@@ -150,6 +164,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                         icon: Icons.remove,
                         backgroundColor: AppColors.mainColor,
                         iconColor: Colors.white,
+                        size: Dimensions.height10 * 5,
                       ),
                     ),
                     BigText(
@@ -166,6 +181,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                         icon: Icons.add,
                         backgroundColor: AppColors.mainColor,
                         iconColor: Colors.white,
+                        size: Dimensions.height10 * 5,
                       ),
                     ),
                   ],

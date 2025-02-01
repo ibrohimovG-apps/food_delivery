@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: MainFoodPage(),
-      initialRoute: RouteHelper.home,
+      initialRoute: RouteHelper.initial,
       getPages: RouteHelper.routes,
     );
   }
