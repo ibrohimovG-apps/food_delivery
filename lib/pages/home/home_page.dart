@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(
-          CupertinoIcons.home,
+          CupertinoIcons.house_fill,
           size: Dimensions.height10 * 2.5,
         ),
         title: ("Home"),
@@ -74,10 +74,10 @@ class _HomePageState extends State<HomePage> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(
-          CupertinoIcons.person,
+          CupertinoIcons.person_fill,
           size: Dimensions.height10 * 2.5,
         ),
-        title: ("Person"),
+        title: ("Me"),
         activeColorPrimary: AppColors.mainColor,
         inactiveColorPrimary: Colors.amberAccent,
       ),

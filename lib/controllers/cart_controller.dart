@@ -119,4 +119,14 @@ class CartController extends GetxController {
       });
     }
   }
+
+  void addToHistory() {
+    cartRepo.addToHistoryList();
+    clear();
+  }
+
+  void clear() {
+    _items = {};
+    update();
+  }
 }
