@@ -16,17 +16,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<PopularProductController>().getPopularProductList();
-    Get.find<RecommendedProductController>().getRecommendedProductList();
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      initialRoute: RouteHelper.getInitial(),
-      getPages: RouteHelper.routes,
+    return GetBuilder<PopularProductController>(
+      builder: (_) {
+        return GetBuilder<RecommendedProductController>(
+          builder: (_) {
+            return GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                useMaterial3: true,
+              ),
+              initialRoute: RouteHelper.getSplashScrren(),
+              getPages: RouteHelper.routes,
+            );
+          },
+        );
+      },
     );
   }
 }
