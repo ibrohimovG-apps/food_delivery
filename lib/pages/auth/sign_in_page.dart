@@ -76,6 +76,7 @@ class SignInPage extends StatelessWidget {
               controller: passwordController,
               icon: Icons.password_outlined,
               iconColor: AppColors.yellowColor,
+              isObscure: true,
             ),
             SizedBox(
               height: Dimensions.height10 * 2,

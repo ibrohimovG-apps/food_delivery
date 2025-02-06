@@ -6,12 +6,14 @@ class AppTextField extends StatelessWidget {
   final String text;
   final IconData icon;
   final Color iconColor;
+  final bool isObscure;
   const AppTextField({
     super.key,
     required this.text,
     required this.controller,
     required this.icon,
     required this.iconColor,
+    this.isObscure=false,
   });
 
   @override
@@ -21,18 +23,19 @@ class AppTextField extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: Dimensions.height10 * 2),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(Dimensions.height10 * 3),
+        borderRadius: BorderRadius.circular(Dimensions.height10 * 1.5),
         boxShadow: [
           BoxShadow(
-            blurRadius: 10,
-            spreadRadius: 7,
-            offset: Offset(1, 10),
+            blurRadius: 3,
+            spreadRadius: 1,
+            offset: Offset(1, 1),
             color: Colors.grey.withOpacity(0.2),
           ),
         ],
       ),
       child: TextField(
         controller: controller,
+        obscureText: isObscure,
         style: TextStyle(fontSize: Dimensions.height10 * 2),
         decoration: InputDecoration(
           hintText: text,
@@ -46,21 +49,21 @@ class AppTextField extends StatelessWidget {
             size: Dimensions.height10 * 2.5,
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Dimensions.height10 * 3),
+            borderRadius: BorderRadius.circular(Dimensions.height10 * 1.5),
             borderSide: BorderSide(
               width: 1.0,
               color: Colors.white,
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Dimensions.height10 * 3),
+            borderRadius: BorderRadius.circular(Dimensions.height10 * 1.5),
             borderSide: BorderSide(
               width: 1.0,
               color: Colors.white,
             ),
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Dimensions.height10 * 3),
+            borderRadius: BorderRadius.circular(Dimensions.height10 * 1.5),
           ),
         ),
       ),
