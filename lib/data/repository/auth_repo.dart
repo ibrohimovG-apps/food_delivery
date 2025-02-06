@@ -23,7 +23,7 @@ class AuthRepo {
   }
 
   bool userHasLoggedIn() {
-    return  sharedPreferences.containsKey(AppConstants.TOKEN);
+    return sharedPreferences.containsKey(AppConstants.TOKEN);
   }
 
   Future<Response> login(String phone, String password) async {
@@ -31,7 +31,7 @@ class AuthRepo {
       AppConstants.LOGIN_URL,
       {"phone": phone, "password": password},
     );
-  } 
+  }
 
   Future<bool> saveUserToke(String token) async {
     apiClient.token = token;
@@ -46,5 +46,14 @@ class AuthRepo {
     } catch (e) {
       throw e;
     }
+  }
+
+  bool clearSharedData() {
+    sharedPreferences.remove(AppConstants.TOKEN);
+    sharedPreferences.remove(AppConstants.PASSWORD);
+    sharedPreferences.remove(AppConstants.PHONE);
+    apiClient.token = '';
+    apiClient.updateHeader('');
+    return true;
   }
 }
