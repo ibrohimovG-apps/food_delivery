@@ -8,6 +8,7 @@ class AuthController extends GetxController implements GetxService {
   AuthController({required this.authRepo});
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+  
   Future<ResponseModel> registration(SignUpBodyModel signUpBodyModel) async {
     _isLoading = true;
     update();
@@ -23,4 +24,26 @@ class AuthController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  Future<ResponseModel> login(String phone, String password) async {
+    authRepo.getUserToken();
+    _isLoading = true;
+    update();
+    Response response = await authRepo.login(phone, password);
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      authRepo.saveUserToke(response.body['token'].toString());
+      responseModel = ResponseModel(true, response.body['token']);
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  void saveUserEmailAndPassword(String number, String password) {
+    authRepo.saveUserEmailAndPassword(number, password);
+  }
 }
+ 

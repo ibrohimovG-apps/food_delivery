@@ -4,6 +4,7 @@ import 'package:food_delivery/base/custom_loader.dart';
 import 'package:food_delivery/base/show_custom_snackbar.dart';
 import 'package:food_delivery/controllers/auth_controller.dart';
 import 'package:food_delivery/models/sign_up_body_model.dart';
+import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
 import 'package:food_delivery/widgets/app_text_field.dart';
@@ -53,6 +54,7 @@ class SignUpPage extends StatelessWidget {
         );
         authController.registration(signUpBodyModel).then((status) {
           if (status.isSuccess) {
+            Get.toNamed(RouteHelper.getInitial());
           } else {
             showCustomSnackbar(status.message);
           }
@@ -63,8 +65,8 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: GetBuilder<AuthController>(
-        builder: (authController) {
-          return !authController.isLoading
+        builder: (_authController) {
+          return !_authController.isLoading
               ? SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(
@@ -123,7 +125,7 @@ class SignUpPage extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          _registration(authController);
+                          _registration(_authController);
                         },
                         child: Container(
                           width: Dimensions.height10 * 20,
