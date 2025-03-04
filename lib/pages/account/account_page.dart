@@ -60,7 +60,7 @@ class AccountPage extends StatelessWidget {
                                 children: [
                                   AccountWidget(
                                     icon: Icons.person,
-                                    text: _userController.userModel.name,
+                                    text: _userController.userModel?.name??'',
                                     backgroundColor: AppColors.mainColor,
                                   ),
                                   SizedBox(
@@ -68,7 +68,7 @@ class AccountPage extends StatelessWidget {
                                   ),
                                   AccountWidget(
                                     icon: Icons.phone,
-                                    text: _userController.userModel.phone,
+                                    text: _userController.userModel?.phone??'',
                                     backgroundColor: AppColors.yellowColor,
                                   ),
                                   SizedBox(
@@ -76,7 +76,7 @@ class AccountPage extends StatelessWidget {
                                   ),
                                   AccountWidget(
                                     icon: Icons.email,
-                                    text: _userController.userModel.email,
+                                    text: _userController.userModel?.email??'',
                                     backgroundColor: AppColors.yellowColor,
                                   ),
                                   SizedBox(
