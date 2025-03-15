@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/base/custom_loader.dart';
 import 'package:food_delivery/controllers/auth_controller.dart';
 import 'package:food_delivery/controllers/cart_controller.dart';
+import 'package:food_delivery/controllers/location_controller.dart';
 import 'package:food_delivery/controllers/user_controller.dart';
 import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/colors.dart';
@@ -60,7 +61,7 @@ class AccountPage extends StatelessWidget {
                                 children: [
                                   AccountWidget(
                                     icon: Icons.person,
-                                    text: _userController.userModel?.name??'',
+                                    text: _userController.userModel?.name ?? '',
                                     backgroundColor: AppColors.mainColor,
                                   ),
                                   SizedBox(
@@ -68,7 +69,8 @@ class AccountPage extends StatelessWidget {
                                   ),
                                   AccountWidget(
                                     icon: Icons.phone,
-                                    text: _userController.userModel?.phone??'',
+                                    text:
+                                        _userController.userModel?.phone ?? '',
                                     backgroundColor: AppColors.yellowColor,
                                   ),
                                   SizedBox(
@@ -76,16 +78,45 @@ class AccountPage extends StatelessWidget {
                                   ),
                                   AccountWidget(
                                     icon: Icons.email,
-                                    text: _userController.userModel?.email??'',
+                                    text:
+                                        _userController.userModel?.email ?? '',
                                     backgroundColor: AppColors.yellowColor,
                                   ),
                                   SizedBox(
                                     height: Dimensions.height10 * 2,
                                   ),
-                                  AccountWidget(
-                                    icon: Icons.location_on,
-                                    text: "Address",
-                                    backgroundColor: AppColors.yellowColor,
+                                  GetBuilder<LocationController>(
+                                    builder: (locationController) {
+                                      if (_userLoggedIn &&
+                                          locationController
+                                              .addressList.isEmpty) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Get.offNamed(RouteHelper
+                                                .getAddAddressPage());
+                                          },
+                                          child: AccountWidget(
+                                            icon: Icons.location_on,
+                                            text: "Fill Your Address",
+                                            backgroundColor:
+                                                AppColors.yellowColor,
+                                          ),
+                                        );
+                                      } else {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Get.offNamed(RouteHelper
+                                                .getAddAddressPage());
+                                          },
+                                          child: AccountWidget(
+                                            icon: Icons.location_on,
+                                            text: "Your Address",
+                                            backgroundColor:
+                                                AppColors.yellowColor,
+                                          ),
+                                        );
+                                      }
+                                    },
                                   ),
                                   SizedBox(
                                     height: Dimensions.height10 * 2,
@@ -107,6 +138,8 @@ class AccountPage extends StatelessWidget {
                                         Get.find<CartController>().clear();
                                         Get.find<CartController>()
                                             .clearCartHistory();
+                                        Get.find<LocationController>()
+                                            .clearAddressList();
                                         Get.offNamed(RouteHelper.getSignIn());
                                       }
                                     },

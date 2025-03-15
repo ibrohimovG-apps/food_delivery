@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/controllers/auth_controller.dart';
 import 'package:food_delivery/controllers/location_controller.dart';
 import 'package:food_delivery/controllers/user_controller.dart';
+import 'package:food_delivery/models/address_model.dart';
+import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
 import 'package:food_delivery/widgets/app_text_field.dart';
@@ -41,6 +43,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
       Get.find<UserController>().getUserInfo();
     }
     if (Get.find<LocationController>().addressList.isNotEmpty) {
+      Get.find<LocationController>().getUserAddress();
       _cameraPosition = CameraPosition(
         target: LatLng(
           double.parse(Get.find<LocationController>().getAddress["latitude"]),
@@ -107,6 +110,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                             compassEnabled: false,
                             indoorViewEnabled: true,
                             mapToolbarEnabled: false,
+                            myLocationEnabled: true,
                             onCameraIdle: () {
                               locationController.updatePosition(
                                 _cameraPosition,
@@ -252,7 +256,27 @@ class _AddAddressPageState extends State<AddAddressPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // popularProduct.addItem(product);
+                        AddressModel _addressModel = AddressModel(
+                          addressType: locationController.addressTypeList[
+                              locationController.addressTypeIndex],
+                          contactPersonName: _contactPersonName.text,
+                          contactPersonNumber: _contactPersonNumber.text,
+                          address: _addressController.text,
+                          latitude:
+                              locationController.position.latitude.toString(),
+                          longitude:
+                              locationController.position.longitude.toString(),
+                        );
+                        locationController
+                            .addAddress(_addressModel)
+                            .then((response) {
+                          if (response.isSuccess) {
+                            Get.toNamed(RouteHelper.getInitial());
+                            Get.snackbar("Address", "Added succesfully");
+                          } else {
+                            Get.snackbar("Address", "Couldn't save address");
+                          }
+                        });
                       },
                       child: Container(
                         padding: EdgeInsets.all(Dimensions.height10 * 2),
