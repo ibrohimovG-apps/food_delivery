@@ -108,7 +108,7 @@ class LocationController extends GetxController implements GetxService {
 
   late Map<String, dynamic> _getAddress;
   Map get getAddress => _getAddress;
-  
+
   AddressModel getUserAddress() {
     late AddressModel _addressModel;
     _getAddress = jsonDecode(locationRepo.getUserAddress());
@@ -169,5 +169,9 @@ class LocationController extends GetxController implements GetxService {
     _addressList = [];
     _allAddressList = [];
     update();
+  }
+
+  String getUserAddressFromLocalStorage() {
+    return locationRepo.getUserAddress();
   }
 }
