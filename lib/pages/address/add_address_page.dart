@@ -3,6 +3,7 @@ import 'package:food_delivery/controllers/auth_controller.dart';
 import 'package:food_delivery/controllers/location_controller.dart';
 import 'package:food_delivery/controllers/user_controller.dart';
 import 'package:food_delivery/models/address_model.dart';
+import 'package:food_delivery/pages/address/pick_address_map.dart';
 import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
@@ -107,6 +108,16 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       child: Stack(
                         children: [
                           GoogleMap(
+                            onTap: (argument) {
+                              Get.toNamed(
+                                RouteHelper.getPickAddressMap(),
+                                arguments: PickAddressMap(
+                                  fromSignUp: false,
+                                  fromAddressPage: true,
+                                  googleMapController: locationController.mapController,
+                                ),
+                              );
+                            },
                             initialCameraPosition: CameraPosition(
                               target: _initialPosition,
                               zoom: 17,
