@@ -43,6 +43,12 @@ dependencies:
   google_maps_flutter: ^2.10.1
   geocoding: ^3.0.0
   geolocator: ^13.0.2
+  flutter_typeahead: ^5.2.0
+  google_maps_flutter_web: ^0.5.11
+  place_picker_google: ^0.0.14
+  dynamic_path_url_strategy: ^1.0.0
+  flutter_google_maps_webservices: ^1.1.1
+  flutter_google_places_sdk: ^0.4.0
 
 dev_dependencies:
   flutter_test:

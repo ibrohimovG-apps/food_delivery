@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/base/custom_button.dart';
 import 'package:food_delivery/controllers/location_controller.dart';
+import 'package:food_delivery/pages/address/widgets/search_location_page.dart';
 import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimensions.dart';
@@ -79,6 +80,9 @@ class _PickAddressMapState extends State<PickAddressMap> {
                         Get.find<LocationController>()
                             .updatePosition(_cameraPosition, false);
                       },
+                      onMapCreated: (controller) {
+                        _mapController = controller;
+                      },
                     ),
                     Center(
                       child: !locationController.loading
@@ -93,35 +97,49 @@ class _PickAddressMapState extends State<PickAddressMap> {
                       top: Dimensions.height10 * 4.5,
                       left: Dimensions.height10 * 2,
                       right: Dimensions.height10 * 2,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Dimensions.height10,
-                        ),
-                        height: Dimensions.height10 * 5,
-                        decoration: BoxDecoration(
-                          color: AppColors.mainColor,
-                          borderRadius:
-                              BorderRadius.circular(Dimensions.height10),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              size: Dimensions.height10 * 2.5,
-                              color: AppColors.yellowColor,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "${locationController.pickPlacemark.name ?? ''}",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: Dimensions.height10 * 1.6,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                      child: InkWell(
+                        onTap: () {
+                          Get.dialog(SearchLocationPage(
+                              mapController: _mapController));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.height10,
+                          ),
+                          height: Dimensions.height10 * 5,
+                          decoration: BoxDecoration(
+                            color: AppColors.mainColor,
+                            borderRadius:
+                                BorderRadius.circular(Dimensions.height10),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                size: Dimensions.height10 * 2.5,
+                                color: AppColors.yellowColor,
                               ),
-                            ),
-                          ],
+                              Expanded(
+                                child: Text(
+                                  "${locationController.pickPlacemark.name ?? ''}",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: Dimensions.height10 * 1.6,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              SizedBox(
+                                width: Dimensions.height10,
+                              ),
+                              Icon(
+                                Icons.search,
+                                size: Dimensions.height10 * 2.5,
+                                color: AppColors.yellowColor,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -129,35 +147,45 @@ class _PickAddressMapState extends State<PickAddressMap> {
                       bottom: Dimensions.height10 * 8,
                       left: Dimensions.height10 * 2,
                       right: Dimensions.height10 * 2,
-                      child: CustomButton(
-                        buttonText: "Pick Address",
-                        onPressed: locationController.loading
-                            ? null
-                            : () {
-                                if (locationController.pickPosition.latitude !=
-                                        0 &&
-                                    locationController.pickPlacemark.name !=
-                                        null) {
-                                  if (widget.fromAddressPage) {
-                                    if (widget.googleMapController != null) {
-                                      widget.googleMapController!.moveCamera(
-                                          CameraUpdate.newCameraPosition(
-                                              CameraPosition(
-                                                  target: LatLng(
-                                                      locationController
-                                                          .pickPosition
-                                                          .latitude,
-                                                      locationController
-                                                          .pickPosition
-                                                          .longitude))));
-                                      locationController.setAddAddressData();
-                                    }
-                                    Get.toNamed(
-                                        RouteHelper.getAddAddressPage());
-                                  }
-                                }
-                              },
-                      ),
+                      child: locationController.isLoading
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : CustomButton(
+                              buttonText: locationController.inZone
+                                  ? widget.fromAddressPage
+                                      ? "Pick Address"
+                                      : "Pick Location"
+                                  : "Service is not available in your area!",
+                              onPressed: (locationController.buttonDisabled ||
+                                      locationController.loading)
+                                  ? null
+                                  : () {
+                                      if (locationController
+                                                  .pickPosition.latitude !=
+                                              0 &&
+                                          locationController
+                                                  .pickPlacemark.name !=
+                                              null) {
+                                        if (widget.fromAddressPage) {
+                                          widget.googleMapController.moveCamera(
+                                              CameraUpdate.newCameraPosition(
+                                                  CameraPosition(
+                                                      target: LatLng(
+                                                          locationController
+                                                              .pickPosition
+                                                              .latitude,
+                                                          locationController
+                                                              .pickPosition
+                                                              .longitude))));
+                                          locationController
+                                              .setAddAddressData();
+                                          Get.toNamed(
+                                              RouteHelper.getAddAddressPage());
+                                        }
+                                      }
+                                    },
+                            ),
                     ),
                   ],
                 ),

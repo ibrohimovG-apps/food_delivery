@@ -1,0 +1,1 @@
+/Users/macbook/VisualStudioProjects/food_delivery/build/app/intermediates/cxx/Debug/1ipsy1yv/obj/arm64-v8a
