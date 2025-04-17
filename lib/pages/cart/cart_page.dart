@@ -63,7 +63,7 @@ class CartPage extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           if (Get.find<AuthController>().userHasLoggedIn()) {
-                            // cartProducts.addToHistory();
+                            cartProducts.addToHistory();
                             if (Get.find<LocationController>()
                                 .addressList
                                 .isEmpty) {
