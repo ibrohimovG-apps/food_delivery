@@ -49,6 +49,7 @@ dependencies:
   dynamic_path_url_strategy: ^1.0.0
   flutter_google_maps_webservices: ^1.1.1
   flutter_google_places_sdk: ^0.4.0
+  webview_flutter: ^4.11.0
 
 dev_dependencies:
   flutter_test:

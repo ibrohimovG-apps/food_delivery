@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/base/no_data_page.dart';
+import 'package:food_delivery/base/show_custom_snackbar.dart';
 import 'package:food_delivery/controllers/auth_controller.dart';
 import 'package:food_delivery/controllers/cart_controller.dart';
 import 'package:food_delivery/controllers/location_controller.dart';
+import 'package:food_delivery/controllers/order_controller.dart';
 import 'package:food_delivery/controllers/popular_product_controller.dart';
 import 'package:food_delivery/controllers/recommended_product_controller.dart';
+import 'package:food_delivery/controllers/user_controller.dart';
+import 'package:food_delivery/models/place_oreder_model.dart';
 import 'package:food_delivery/routes/route_helper.dart';
 import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/utils/colors.dart';
@@ -69,7 +73,26 @@ class CartPage extends StatelessWidget {
                                 .isEmpty) {
                               Get.toNamed(RouteHelper.getAddAddressPage());
                             } else {
-                              Get.offNamed(RouteHelper.getInitial());
+                              var location = Get.find<LocationController>()
+                                  .getUserAddress();
+                              var cart = Get.find<CartController>().getItems;
+                              var user = Get.find<UserController>().userModel;
+                              PlaceOrederModel placeOrder = PlaceOrederModel(
+                                  cart: cart,
+                                  orderAmount: 100.0,
+                                  distance: 10.0,
+                                  scheduleAt: "",
+                                  orderNote: "Note about the food",
+                                  address: location.address,
+                                  latitude: location.latitude,
+                                  longitude: location.longitude,
+                                  contactPersonName: user!.name,
+                                  contactPersonNumber: user.phone,
+                                );
+                              Get.find<OrderController>().placeOrder(
+                                placeOrder,
+                                _callBack,
+                              );
                             }
                           } else {
                             Get.toNamed(RouteHelper.getSignIn());
@@ -327,5 +350,14 @@ class CartPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _callBack(bool isSuccess, String message, String orderId) {
+    if (isSuccess) {
+      Get.offNamed(RouteHelper.getPaymentPage(
+          orderId, Get.find<UserController>().userModel!.id));
+    } else {
+      showCustomSnackbar(message);
+    }
   }
 }

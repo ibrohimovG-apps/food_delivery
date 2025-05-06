@@ -1,3 +1,4 @@
+import 'package:food_delivery/models/order_model.dart';
 import 'package:food_delivery/pages/address/add_address_page.dart';
 import 'package:food_delivery/pages/address/pick_address_map.dart';
 import 'package:food_delivery/pages/auth/sign_in_page.dart';
@@ -5,6 +6,8 @@ import 'package:food_delivery/pages/cart/cart_page.dart';
 import 'package:food_delivery/pages/food/popular_food_detail.dart';
 import 'package:food_delivery/pages/food/recommended_food_detail.dart';
 import 'package:food_delivery/pages/home/home_page.dart';
+import 'package:food_delivery/pages/payment/order_success_page.dart';
+import 'package:food_delivery/pages/payment/payment_page.dart';
 import 'package:food_delivery/pages/splash/splash_screen.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +22,9 @@ class RouteHelper {
   static const String addAddress = '/add-address';
   static const String pickAddressMap = '/pick-address';
 
+  static const String payment = '/payment';
+  static const String orderSuccess = '/order-successful';
+
   static String getSplashScrren() => '$splashScreen';
   static String getInitial() => '$initial';
   static String getPopularFood(int pageId, String page) =>
@@ -30,6 +36,9 @@ class RouteHelper {
 
   static String getAddAddressPage() => '$addAddress';
   static String getPickAddressMap() => '$pickAddressMap';
+
+  static String getPaymentPage(String id, int userid) => '$payment?id=$id&userId=$userid';
+  static String getOrderSuccessRoute(String orderId, String status) => '$orderSuccess?id=$orderId&status=$status';
 
   static List<GetPage> routes = [
     GetPage(
@@ -87,6 +96,28 @@ class RouteHelper {
       page: () {
         PickAddressMap _pickAddress = Get.arguments;
         return _pickAddress;
+      },
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: payment,
+      page: () {
+        return PaymentScreen(
+          orderModel: OrderModel(
+            id: int.parse(Get.parameters['id']!), 
+            userId: int.parse(Get.parameters['userId']!),
+          ),
+        );
+      },
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: orderSuccess,
+      page: () {
+        return OrderSuccessPage(
+          orderId: Get.parameters['id']!,
+          status: Get.parameters['status'].toString().contains("success")?1:0,
+        );
       },
       transition: Transition.fadeIn,
     ),
