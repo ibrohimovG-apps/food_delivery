@@ -33,7 +33,7 @@ class AuthRepo {
     );
   }
 
-  Future<bool> saveUserToke(String token) async {
+  Future<bool> saveUserToken(String token) async {
     apiClient.token = token;
     apiClient.updateHeader(token);
     return await sharedPreferences.setString(AppConstants.TOKEN, token);

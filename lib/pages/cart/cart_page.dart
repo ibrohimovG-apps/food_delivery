@@ -67,13 +67,12 @@ class CartPage extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           if (Get.find<AuthController>().userHasLoggedIn()) {
-                            cartProducts.addToHistory();
                             if (Get.find<LocationController>()
                                 .addressList
                                 .isEmpty) {
                               Get.toNamed(RouteHelper.getAddAddressPage());
                             } else {
-                              var location = Get.find<LocationController>()
+                              /* var location = Get.find<LocationController>()
                                   .getUserAddress();
                               var cart = Get.find<CartController>().getItems;
                               var user = Get.find<UserController>().userModel;
@@ -92,7 +91,10 @@ class CartPage extends StatelessWidget {
                               Get.find<OrderController>().placeOrder(
                                 placeOrder,
                                 _callBack,
-                              );
+                              ); */
+                              Get.find<CartController>().clear();
+                              Get.find<CartController>().removeCartSharedPreference();
+                              Get.find<CartController>().addToHistory();
                             }
                           } else {
                             Get.toNamed(RouteHelper.getSignIn());
